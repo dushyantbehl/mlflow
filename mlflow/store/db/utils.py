@@ -7,6 +7,7 @@ import sqlalchemy
 from alembic.migration import MigrationContext
 from alembic.script import ScriptDirectory
 from sqlalchemy import sql
+import ibm_db_sa
 
 # We need to import sqlalchemy.pool to convert poolclass string to class object
 from sqlalchemy.pool import (
@@ -289,4 +290,5 @@ def create_sqlalchemy_engine(db_uri):
         pool_kwargs["poolclass"] = pool_class_map[poolclass]
     if pool_kwargs:
         _logger.info("Create SQLAlchemy engine with pool options %s", pool_kwargs)
+    _logger.warning("Trying to create engine with uri "+db_uri)
     return sqlalchemy.create_engine(db_uri, pool_pre_ping=True, **pool_kwargs)

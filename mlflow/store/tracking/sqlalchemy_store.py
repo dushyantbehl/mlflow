@@ -9,6 +9,7 @@ from functools import reduce
 from typing import Optional
 
 import sqlalchemy
+import ibm_db_sa
 import sqlalchemy.sql.expression as sql
 from sqlalchemy import and_, func, sql, text
 from sqlalchemy.future import select

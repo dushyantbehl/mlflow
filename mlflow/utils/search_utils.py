@@ -24,7 +24,7 @@ from mlflow.entities import RunInfo
 from mlflow.entities.model_registry.model_version_stages import STAGE_DELETED_INTERNAL
 from mlflow.exceptions import MlflowException
 from mlflow.protos.databricks_pb2 import INVALID_PARAMETER_VALUE
-from mlflow.store.db.db_types import MSSQL, MYSQL, POSTGRES, SQLITE
+from mlflow.store.db.db_types import MSSQL, MYSQL, POSTGRES, SQLITE, IBM_DB2
 from mlflow.tracing.constant import TraceMetadataKey, TraceTagKey
 from mlflow.utils.mlflow_tags import (
     MLFLOW_DATASET_CONTEXT,
@@ -255,11 +255,17 @@ class SearchUtils:
 
             return comparison_func(column, value)
 
+        #def db2_comparison_func(column, value): # Db2 is case sensitive
+        #    if comparator == "ILIKE":
+        #        return sa.func.LOWER(column).like(sa.func.LOWER(value))
+        #    return comparison_func(column, value)
+
         return {
             POSTGRES: comparison_func,
             SQLITE: comparison_func,
             MSSQL: mssql_comparison_func,
             MYSQL: mysql_comparison_func,
+            IBM_DB2: comparison_func
         }[dialect]
 
     @staticmethod

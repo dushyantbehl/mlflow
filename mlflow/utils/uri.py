@@ -243,7 +243,10 @@ def extract_db_type_from_uri(db_uri):
     Parse the specified DB URI to extract the database type. Confirm the database type is
     supported. If a driver is specified, confirm it passes a plausible regex.
     """
-    scheme = urllib.parse.urlparse(db_uri).scheme
+    if db_uri.startswith("ibm_db_sa"):
+        scheme = "ibm_db_sa"
+    else:
+        scheme = urllib.parse.urlparse(db_uri).scheme
     scheme_plus_count = scheme.count("+")
 
     if scheme_plus_count == 0:
@@ -260,7 +263,10 @@ def extract_db_type_from_uri(db_uri):
 
 
 def get_uri_scheme(uri_or_path):
-    scheme = urllib.parse.urlparse(uri_or_path).scheme
+    if uri_or_path.startswith("ibm_db_sa"):
+        scheme = "ibm_db_sa"
+    else:
+        scheme = urllib.parse.urlparse(uri_or_path).scheme
     if any(scheme.lower().startswith(db) for db in DATABASE_ENGINES):
         return extract_db_type_from_uri(uri_or_path)
     return scheme

@@ -2,6 +2,7 @@ import logging
 import urllib
 
 import sqlalchemy
+import ibm_db_sa
 from sqlalchemy.future import select
 
 import mlflow.store.db.utils
